@@ -1,1 +1,53 @@
-<h1>Aquí iria el diseño del login</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300">
+    <link rel="stylesheet" href="login.component.css" type="text/css"/>
+    
+    <title>Document</title>
+</head>
+<body>
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+  
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <br><h1>Login</h1>
+      </div>
+  
+      <!-- Login Form -->
+      <form >
+        <div>
+        <label class="control-label" >DNI :</label>
+        <input type="text" id="login" class="fadeIn second" name="login" placeholder="DNI">
+        </div>
+
+        <div>
+        <label class="control-label">Contraseña :</label>
+        <input type="text" id="password" class="fadeIn third" name="login" placeholder="Contraseña">
+      </div>
+        <input type="submit" class="fadeIn fourth" value="Iniciar Sesión">
+      </form>
+  
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+        <a class="underlineHover" href="#">¿Olvido su contraseña?</a>
+      </div>
+  
+    </div>
+  </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
