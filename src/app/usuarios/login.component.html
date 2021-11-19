@@ -1,0 +1,11 @@
+<div class="login">
+    <div class="login-triangle"></div>
+
+    <h2 class="login-header">{{titulo}}</h2>
+
+    <form method="post" class="login-container">
+        <p><input [(ngModel)]="usuario.username" type="text" name="username" id="username" placeholder="Username" autofocus required></p>
+        <p><input [(ngModel)]="usuario.password" type="password" name="password" id="password" placeholder="Password" required></p>
+        <p><input (click)="login()" type="submit" value="Log in"></p>
+    </form>
+</div>
