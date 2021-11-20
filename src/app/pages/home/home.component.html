@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col text-right">
-            <button routerLink="/alumno/nuevo" class="btn btn-primary">
+            <button *ngIf="authService.hasRole('ROLE_ADMIN')" class="btn btn-primary">
     
                 <i class="fa fa-plus"></i>
                 Agregar
@@ -18,7 +18,7 @@
                 <th scope="col">EMAIL</th>
                 <th scope="col">SEXO</th>
                 <th scope="col">FECHA NACIMIENTO</th>
-                <th scope="col">ACCIONES</th>
+                <th scope="col" *ngIf="authService.hasRole('ROLE_ADMIN')">ACCIONES</th>
             </tr>
         </thead>
         <tbody>
@@ -32,7 +32,7 @@
 
                 <td data-label="FECHA NACIMIENTO">{{ alumno.fechaNacimiento }}</td>
 
-                <td data-label="ACCIONES">
+                <td *ngIf="authService.hasRole('ROLE_ADMIN')" data-label="ACCIONES">
                     <button class="btn btn-outline-primary" [routerLink]="['/alumno',alumno.id]">
                     <i class="fa fa-pen"></i>
                 </button>

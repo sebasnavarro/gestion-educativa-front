@@ -5,6 +5,7 @@ import { AlumnoService } from 'src/app/services/alumno.service';
 import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/usuarios/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
   paginador: any;
   cargando = false;
 
-  constructor(private alumnoService: AlumnoService, private activatedRoute: ActivatedRoute) { }
+  constructor(private alumnoService: AlumnoService, private activatedRoute: ActivatedRoute, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.cargando = true;
