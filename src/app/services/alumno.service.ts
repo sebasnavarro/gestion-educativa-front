@@ -5,29 +5,47 @@ import { map, catchError, tap, delay, switchAll } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import { AuthService } from '../usuarios/auth.service';
+import Swal from 'sweetalert2';
 @Injectable({
   providedIn: 'root'
 })
-export class ControlService {
+export class AlumnoService {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router,
+  private authService: AuthService){}
+
+  private agregarAutorizationHeader(){
+    let token = this.authService.token;
+    if(token != null){
+      return this.httpHeaders.append('Authorization', 'Bearer '+token);
+    }
+    return this.httpHeaders;
+  }
 
   private httpHeaders = new HttpHeaders({'Content-Type':'application/json'})
   
   private isNoAutorizado(e): boolean{
-    if(e.status==401 || e.status==403){
-      this.router.navigate(['/login'])
+    if(e.status==401){
+      this.router.navigate(['/login']);
       return true;
     }
+
+    if(e.status==403){
+      this.router.navigate(['/home']);
+      Swal.fire('Acceso denegado', `Hola ${this.authService.usuario.nombres} no tienes acceso a este recurso`,'warning');
+      return true;
+    }
+
     return false;
   }
 
   crearAlumno(alumno: AlumnoModel) {
-    return this.http.post(`${environment.url}/alumnos`, alumno).pipe(
+    return this.http.post(`${environment.url}/alumnos`, alumno, { headers : this.agregarAutorizationHeader()}).pipe(
       map((resp: any) => {
         alumno.id = resp.alumno.id;
         console.log(alumno);
-        return alumno;
+        return resp.alumno;
       }),
       catchError(e =>{
 
@@ -39,6 +57,7 @@ export class ControlService {
           return throwError(e);
         }
         console.error(e.error.mensaje);
+        Swal.fire(e.error.mensaje, e.error.error,'error');
         return throwError(e);
         
 
@@ -48,8 +67,13 @@ export class ControlService {
   }
 
   actualizarAlumno(alumno: AlumnoModel) {
-    return this.http.put(`${environment.url}/alumnos/${alumno.id}`, alumno).pipe(
-    catchError(e =>{
+    return this.http.put(`${environment.url}/alumnos/${alumno.id}`, alumno, { headers : this.agregarAutorizationHeader()}).pipe(
+      map((resp: any) => {
+        alumno.id = resp.alumno.id;
+        console.log(alumno);
+        return resp.alumno;
+      }),
+      catchError(e =>{
       if(this.isNoAutorizado(e)){
         return throwError(e);
       }
@@ -57,7 +81,7 @@ export class ControlService {
   }
 
   borrarAlumno(id: string) {
-    return this.http.delete(`${environment.url}/alumnos/${id}`).pipe(
+    return this.http.delete(`${environment.url}/alumnos/${id}`, { headers : this.agregarAutorizationHeader()}).pipe(
     catchError(e =>{
       if(this.isNoAutorizado(e)){
         return throwError(e);
@@ -65,8 +89,12 @@ export class ControlService {
     }));
   }
 
+  obtenerAlumno(id: string) {
+    return this.http.get(`${environment.url}/alumnos/${id}`, { headers : this.agregarAutorizationHeader()});
+  }
+
   listarAlumnos(page: number): Observable<any> {
-    return this.http.get(`${environment.url}/alumnos/page/` + page).pipe(
+    return this.http.get(`${environment.url}/alumnos/page/` + page, { headers : this.agregarAutorizationHeader()}).pipe(
       catchError(e=>{
         this.isNoAutorizado(e);
         return throwError(e);

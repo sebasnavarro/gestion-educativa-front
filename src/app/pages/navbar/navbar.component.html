@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">AppAngular</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Gestión educativa</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -9,23 +9,20 @@
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" routerLink="/home">Home</a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link">Crear</a>
-            </li>
         </ul>
 
         <ul class="navbar-nav navbar-right">
             <li *ngIf="!authService.isAuthenticated()">
-                <a routerLink="/login" class="btn btn-outline-primary">Sign In</a>
+                <a routerLink="/login" class="btn btn-outline-light">Sign In</a>
             </li>
 
             <li *ngIf="authService.isAuthenticated()" class="dropdown">
-                <a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
+                <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
                 {{authService.usuario.nombres}}
             </a>
 
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <li><button (click)="logout()" class="dropdown-item btn btn-outline-primary" href="#">Sign Out</button></li>
+                    <li><button (click)="logout()" class="dropdown-item btn btn-outline-light" href="#">Sign Out</button></li>
                 </ul>
             </li>
 

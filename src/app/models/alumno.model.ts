@@ -4,7 +4,8 @@ import * as internal from "stream";
 
 export class AlumnoModel{
 
-    id: number;
+    id: string;
+    dni: string;
     nombres: string;
     apellidos: string;
     codigo: string;
